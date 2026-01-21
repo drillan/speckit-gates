@@ -57,9 +57,7 @@ npx skills run release-check
 
 ## Documentation
 
-- [Specification](./specs/001-speckit-gates-skills/spec.md)
-- [Implementation Plan](./specs/001-speckit-gates-skills/plan.md)
-- [Data Model](./specs/001-speckit-gates-skills/data-model.md)
+This skill package extends [spec-kit](https://github.com/github/spec-kit) with automated quality gates.
 
 ## License
 
