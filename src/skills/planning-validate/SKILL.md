@@ -4,7 +4,7 @@ description: >
   Validates planning artifacts (spec.md, plan.md, data-model.md, contracts/) for quality,
   completeness, and consistency. Checks for mandatory sections, cross-artifact consistency,
   and constitution compliance. Always run after /speckit.plan completes.
-version: 1.0.0
+version: 0.0.1
 license: MIT
 compatibility: Requires spec kit with check-prerequisites.sh
 metadata:

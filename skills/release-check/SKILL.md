@@ -4,7 +4,7 @@ description: >
   Validates all artifacts are complete and consistent for release.
   Checks spec kit artifacts, documentation, versioning, and API docs.
   Run before creating a release to ensure nothing is missing.
-version: 1.0.0
+version: 0.0.1
 license: MIT
 compatibility: Requires spec kit artifacts
 metadata:

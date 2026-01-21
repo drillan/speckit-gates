@@ -4,7 +4,7 @@ description: >
   Verifies implementation against specifications by checking requirement fulfillment,
   task completion, and contract implementation. Generates a fulfillment report with
   coverage metrics. Always run after /speckit.implement completes.
-version: 1.0.0
+version: 0.0.1
 license: MIT
 compatibility: Requires spec kit with check-prerequisites.sh, tasks.md must exist
 metadata:

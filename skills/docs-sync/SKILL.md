@@ -4,7 +4,7 @@ description: >
   Synchronizes documentation (README.md, CHANGELOG.md, API docs) with implementation.
   Preserves user content outside speckit markers. Updates are non-destructive and
   clearly delineated. Always run after /speckit.implement completes.
-version: 1.0.0
+version: 0.0.1
 license: MIT
 compatibility: Requires spec kit artifacts
 metadata:

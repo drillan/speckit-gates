@@ -4,7 +4,7 @@ description: >
   Displays progress dashboard showing phase completion, blocked tasks,
   and remaining work estimate. Provides at-a-glance view of implementation
   status. Run anytime to check progress.
-version: 1.0.0
+version: 0.0.1
 license: MIT
 compatibility: Requires tasks.md
 metadata:
