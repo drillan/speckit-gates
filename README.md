@@ -1,6 +1,6 @@
 # speckit-gates
 
-Quality gate skills package for the spec kit workflow.
+This skill package extends [spec-kit](https://github.com/github/spec-kit) with automated quality gates.
 
 ## Overview
 
@@ -54,10 +54,6 @@ npx skills run release-check
 
 - Spec kit installed and configured
 - AI coding agent (Claude Code, Cursor, Copilot, etc.)
-
-## Documentation
-
-This skill package extends [spec-kit](https://github.com/github/spec-kit) with automated quality gates.
 
 ## License
 
