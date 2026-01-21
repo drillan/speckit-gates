@@ -7,8 +7,8 @@
 # and eliminating the need for shared/ directory at runtime.
 #
 # Architecture:
-#   - skills/       : Source scripts with source statements (unchanged)
-#   - .claude/skills/: Bundled scripts with embedded utilities (generated)
+#   - src/skills/  : Source scripts with source statements (development)
+#   - skills/      : Bundled scripts with embedded utilities (distribution)
 #
 # Usage:
 #   ./scripts/build.sh
@@ -18,9 +18,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-SHARED_DIR="$REPO_ROOT/skills/shared"
-SOURCE_SKILLS_DIR="$REPO_ROOT/skills"
-OUTPUT_SKILLS_DIR="$REPO_ROOT/.claude/skills"
+SHARED_DIR="$REPO_ROOT/src/skills/shared"
+SOURCE_SKILLS_DIR="$REPO_ROOT/src/skills"
+OUTPUT_SKILLS_DIR="$REPO_ROOT/skills"
 
 # Colors for output
 readonly COLOR_RED='\033[0;31m'
@@ -198,7 +198,7 @@ bundle_skill() {
     fi
 
     # Validate the bundled file has valid bash syntax
-    if ! bash -n "$temp_file" 2>/dev/null; then
+    if ! bash -n "$temp_file"; then
         log_error "Bundling produced invalid bash syntax for $skill_name"
         log_error "Temp file: $temp_file (not deleted for debugging)"
         return 1

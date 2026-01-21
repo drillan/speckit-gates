@@ -2,7 +2,7 @@
 #
 # test-bundled.sh - Verify bundled skill scripts have valid syntax
 #
-# Tests the bundled scripts in .claude/skills/ directory.
+# Tests the bundled scripts in skills/ directory.
 #
 # Usage:
 #   ./scripts/test-bundled.sh
@@ -17,7 +17,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-BUNDLED_SKILLS_DIR="$REPO_ROOT/.claude/skills"
+BUNDLED_SKILLS_DIR="$REPO_ROOT/skills"
 
 # Colors for output
 readonly COLOR_RED='\033[0;31m'
@@ -70,7 +70,7 @@ check_embedded() {
 
 # Main
 main() {
-    echo "Testing bundled skill scripts in .claude/skills/..."
+    echo "Testing bundled skill scripts in skills/..."
     echo ""
 
     # Check if bundled directory exists
