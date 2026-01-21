@@ -2,15 +2,22 @@
 #
 # test-bundled.sh - Verify bundled skill scripts have valid syntax
 #
+# Tests the bundled scripts in .claude/skills/ directory.
+#
 # Usage:
 #   ./scripts/test-bundled.sh
+#
+# Exit Codes:
+#   0 - All bundled scripts pass syntax check
+#   1 - One or more scripts have syntax errors
+#   2 - Scripts not found (run build.sh first)
 #
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-SKILLS_DIR="$REPO_ROOT/skills"
+BUNDLED_SKILLS_DIR="$REPO_ROOT/.claude/skills"
 
 # Colors for output
 readonly COLOR_RED='\033[0;31m'
@@ -63,30 +70,39 @@ check_embedded() {
 
 # Main
 main() {
-    echo "Testing bundled skill scripts..."
+    echo "Testing bundled skill scripts in .claude/skills/..."
     echo ""
 
+    # Check if bundled directory exists
+    if [[ ! -d "$BUNDLED_SKILLS_DIR" ]]; then
+        log_fail "Bundled skills directory not found: $BUNDLED_SKILLS_DIR"
+        echo ""
+        echo "Run 'scripts/build.sh' first to generate bundled scripts."
+        exit 2
+    fi
+
     local skill_scripts=(
-        "$SKILLS_DIR/planning-validate/scripts/validate.sh"
-        "$SKILLS_DIR/implementation-verify/scripts/verify.sh"
-        "$SKILLS_DIR/docs-sync/scripts/sync.sh"
-        "$SKILLS_DIR/progress-report/scripts/report.sh"
-        "$SKILLS_DIR/release-check/scripts/check.sh"
+        "$BUNDLED_SKILLS_DIR/planning-validate/scripts/validate.sh"
+        "$BUNDLED_SKILLS_DIR/implementation-verify/scripts/verify.sh"
+        "$BUNDLED_SKILLS_DIR/docs-sync/scripts/sync.sh"
+        "$BUNDLED_SKILLS_DIR/progress-report/scripts/report.sh"
+        "$BUNDLED_SKILLS_DIR/release-check/scripts/check.sh"
     )
 
     local pass_count=0
     local fail_count=0
-    local unbundled_count=0
+    local missing_count=0
 
     for script in "${skill_scripts[@]}"; do
         if [[ ! -f "$script" ]]; then
             log_fail "$(basename "$script"): File not found"
-            ((fail_count++)) || true
+            ((missing_count++)) || true
             continue
         fi
 
         if ! check_embedded "$script"; then
-            ((unbundled_count++)) || true
+            log_fail "$(basename "$script"): Not properly bundled"
+            ((fail_count++)) || true
             continue
         fi
 
@@ -99,16 +115,16 @@ main() {
 
     echo ""
     echo "========================================="
-    echo "Results: $pass_count passed, $fail_count failed, $unbundled_count unbundled"
+    echo "Results: $pass_count passed, $fail_count failed, $missing_count missing"
     echo "========================================="
 
     if [[ "$fail_count" -gt 0 ]]; then
         exit 1
     fi
 
-    if [[ "$unbundled_count" -gt 0 ]]; then
+    if [[ "$missing_count" -gt 0 ]]; then
         echo ""
-        echo "Note: Some scripts are not bundled. Run 'scripts/build.sh' first."
+        echo "Note: Some scripts are missing. Run 'scripts/build.sh' to regenerate."
         exit 2
     fi
 
