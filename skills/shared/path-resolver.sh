@@ -9,11 +9,11 @@
 
 set -euo pipefail
 
-# Colors for output
-readonly RED='\033[0;31m'
-readonly YELLOW='\033[1;33m'
-readonly GREEN='\033[0;32m'
-readonly NC='\033[0m' # No Color
+# Colors for output (using COLOR_* naming convention)
+readonly COLOR_RED='\033[0;31m'
+readonly COLOR_YELLOW='\033[1;33m'
+readonly COLOR_GREEN='\033[0;32m'
+readonly COLOR_NC='\033[0m' # No Color
 
 # Find the repository root by looking for .git or .specify
 find_repo_root() {
@@ -32,21 +32,21 @@ find_repo_root() {
 resolve_paths() {
     local repo_root
     repo_root="$(find_repo_root)" || {
-        echo -e "${RED}Error: Could not find repository root${NC}" >&2
+        echo -e "${COLOR_RED}Error: Could not find repository root${COLOR_NC}" >&2
         return 1
     }
 
     local prereq_script="$repo_root/.specify/scripts/bash/check-prerequisites.sh"
 
     if [[ ! -f "$prereq_script" ]]; then
-        echo -e "${RED}Error: check-prerequisites.sh not found at $prereq_script${NC}" >&2
+        echo -e "${COLOR_RED}Error: check-prerequisites.sh not found at $prereq_script${COLOR_NC}" >&2
         return 1
     fi
 
     # Run check-prerequisites.sh --json and parse output
     local json_output
     json_output=$("$prereq_script" --json 2>/dev/null) || {
-        echo -e "${RED}Error: Failed to run check-prerequisites.sh${NC}" >&2
+        echo -e "${COLOR_RED}Error: Failed to run check-prerequisites.sh${COLOR_NC}" >&2
         return 1
     }
 
@@ -54,7 +54,7 @@ resolve_paths() {
     FEATURE_DIR=$(echo "$json_output" | grep -o '"FEATURE_DIR":"[^"]*"' | cut -d'"' -f4)
 
     if [[ -z "$FEATURE_DIR" ]]; then
-        echo -e "${RED}Error: Could not determine FEATURE_DIR${NC}" >&2
+        echo -e "${COLOR_RED}Error: Could not determine FEATURE_DIR${COLOR_NC}" >&2
         return 1
     fi
 
@@ -83,7 +83,7 @@ require_file() {
     local name="${2:-$file}"
 
     if [[ ! -f "$file" ]]; then
-        echo -e "${RED}Error: Required file missing: $name${NC}" >&2
+        echo -e "${COLOR_RED}Error: Required file missing: $name${COLOR_NC}" >&2
         echo "Path: $file" >&2
         return 1
     fi
