@@ -198,7 +198,7 @@ bundle_skill() {
     fi
 
     # Validate the bundled file has valid bash syntax
-    if ! bash -n "$temp_file" 2>/dev/null; then
+    if ! bash -n "$temp_file"; then
         log_error "Bundling produced invalid bash syntax for $skill_name"
         log_error "Temp file: $temp_file (not deleted for debugging)"
         return 1
