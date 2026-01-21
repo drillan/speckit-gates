@@ -489,10 +489,7 @@ require_command() {
 # ============================================================================
 
 
-# Get script directory and source shared utilities
-source "$SHARED_DIR/path-resolver.sh"
-source "$SHARED_DIR/output-format.sh"
-source "$SHARED_DIR/error-handler.sh"
+
 
 # Initialize
 reset_errors

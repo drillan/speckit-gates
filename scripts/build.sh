@@ -122,30 +122,17 @@ bundle_skill() {
     local header=""
     local body=""
     local in_header=true
-    local skip_source_block=false
 
     while IFS= read -r line || [[ -n "$line" ]]; do
-        # Skip source block (SCRIPT_DIR, SHARED_DIR, source statements)
-        if [[ "$line" =~ ^SCRIPT_DIR= ]] || [[ "$line" =~ ^SHARED_DIR= ]]; then
-            skip_source_block=true
+        # Skip these lines unconditionally (source setup block)
+        # - SCRIPT_DIR and SHARED_DIR variable assignments
+        # - source statements referencing SHARED_DIR
+        # - Comment line about sourcing shared utilities
+        if [[ "$line" =~ ^SCRIPT_DIR= ]] || \
+           [[ "$line" =~ ^SHARED_DIR= ]] || \
+           [[ "$line" =~ ^source\ \"\$SHARED_DIR ]] || \
+           [[ "$line" == "# Get script directory and source shared utilities" ]]; then
             continue
-        fi
-
-        # End of source block after last source statement
-        if $skip_source_block && [[ "$line" =~ ^source ]]; then
-            continue
-        fi
-
-        # Empty line after source statements ends the source block
-        if $skip_source_block && [[ -z "$line" ]]; then
-            skip_source_block=false
-            continue
-        fi
-
-        # If still in source block but not a source line, end the block
-        if $skip_source_block && [[ ! "$line" =~ ^source ]]; then
-            skip_source_block=false
-            # Don't continue - process this line
         fi
 
         # Separate header from body
