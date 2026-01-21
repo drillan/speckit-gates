@@ -26,4 +26,10 @@ Markdown (SKILL.md format), Bash scripts (for execution): Follow standard conven
 - 001-speckit-gates-skills: Added Markdown (SKILL.md format), Bash scripts (for execution) + Agent Skills specification (agentskills.io/specification), spec kit ecosystem
 
 <!-- MANUAL ADDITIONS START -->
+## Constitution Rules
+
+- **English only**: All generated files, commits, comments must be in English
+- **Commits**: Use conventional commit format, atomic changes
+- **Skills**: Must conform to agentskills.io/specification
+- **Spec kit**: Use `check-prerequisites.sh --json` for path resolution
 <!-- MANUAL ADDITIONS END -->
