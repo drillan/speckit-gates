@@ -27,3 +27,7 @@ node_modules/
 
 # Test coverage
 coverage/
+
+# Installed skills (local installation by npx skills add)
+.agents/
+.claude/skills/
